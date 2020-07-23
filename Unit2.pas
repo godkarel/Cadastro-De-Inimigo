@@ -19,8 +19,10 @@ type
     btnProcurar: TButton;
     isqProcuraInimigo: TIBSQL;
     mmoDesc: TMemo;
-    edtNome: TEdit;
+    edtNome: TLabeledEdit;
+    btnCadastrar: TButton;
     procedure btnProcurarClick(Sender: TObject);
+    procedure btnCadastrarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,7 +37,12 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit1;
+  Unit1, Unit3;
+
+procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
+begin
+   Form3.Show;
+end;
 
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var

@@ -111,18 +111,29 @@ object frmMonstro: TfrmMonstro
     ParentFont = False
     TabOrder = 5
   end
-  object edtNome: TEdit
+  object edtNome: TLabeledEdit
     Left = 16
     Top = 65
     Width = 121
     Height = 21
+    EditLabel.Width = 27
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Nome'
     TabOrder = 6
-    Text = 'edtNome'
+  end
+  object btnCadastrar: TButton
+    Left = 216
+    Top = 63
+    Width = 75
+    Height = 25
+    Caption = 'Cadastrar'
+    TabOrder = 7
+    OnClick = btnCadastrarClick
   end
   object isqProcuraInimigo: TIBSQL
     Database = dtmInimigos.idbInimigos
     Transaction = dtmInimigos.itrInimigos
-    Left = 352
-    Top = 56
+    Left = 464
+    Top = 8
   end
 end
