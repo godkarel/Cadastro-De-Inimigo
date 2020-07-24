@@ -1,0 +1,47 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, IBX.IBSQL;
+
+type
+  TForm3 = class(TForm)
+    edtNomeCadastra: TLabeledEdit;
+    labLevelCadastra: TLabeledEdit;
+    labDanoCadastra: TLabeledEdit;
+    labCACadastra: TLabeledEdit;
+    mmoDescCadastra: TMemo;
+    Label1: TLabel;
+    btnCadastraDB: TButton;
+    btnArmasCadastra: TButton;
+    isqCadastra: TIBSQL;
+    procedure btnCadastraDBClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit1, Unit2;
+
+procedure TForm3.btnCadastraDBClick(Sender: TObject);
+var
+RegistroNome : String;
+begin
+   RegistroNome := 'Gilbertinho';
+   isqCadastra.SQL.Clear;
+   isqCadastra.SQL.Add('Select NOME FROM MONSTER WHERE NOME = :NOMEMONSTER');
+   isqCadastra.ParamByName('NOMEMONSTER').AsString := RegistroNome;
+   isqCadastra.ExecQuery;
+end;
+
+end.

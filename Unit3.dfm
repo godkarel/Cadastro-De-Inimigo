@@ -80,6 +80,7 @@ object Form3: TForm3
     Height = 25
     Caption = 'Cadastrar'
     TabOrder = 5
+    OnClick = btnCadastraDBClick
   end
   object btnArmasCadastra: TButton
     Left = 592
@@ -88,5 +89,11 @@ object Form3: TForm3
     Height = 25
     Caption = 'Armas'
     TabOrder = 6
+  end
+  object isqCadastra: TIBSQL
+    Database = dtmInimigos.idbInimigos
+    Transaction = dtmInimigos.itrInimigos
+    Left = 592
+    Top = 16
   end
 end
