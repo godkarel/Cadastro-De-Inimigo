@@ -26,52 +26,41 @@ object Form3: TForm3
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object edtNomeCadastra: TLabeledEdit
-    Left = 24
-    Top = 48
-    Width = 121
-    Height = 21
-    EditLabel.Width = 27
-    EditLabel.Height = 13
-    EditLabel.Caption = 'Nome'
-    TabOrder = 0
+  object Label2: TLabel
+    Left = 64
+    Top = 29
+    Width = 27
+    Height = 13
+    Caption = 'Nome'
   end
-  object labLevelCadastra: TLabeledEdit
-    Left = 24
-    Top = 96
-    Width = 121
-    Height = 21
-    EditLabel.Width = 25
-    EditLabel.Height = 13
-    EditLabel.Caption = 'Level'
-    TabOrder = 1
+  object Label3: TLabel
+    Left = 64
+    Top = 77
+    Width = 25
+    Height = 13
+    Caption = 'Level'
   end
-  object labDanoCadastra: TLabeledEdit
-    Left = 24
-    Top = 144
-    Width = 121
-    Height = 21
-    EditLabel.Width = 25
-    EditLabel.Height = 13
-    EditLabel.Caption = 'Dano'
-    TabOrder = 2
+  object Label4: TLabel
+    Left = 64
+    Top = 125
+    Width = 25
+    Height = 13
+    Caption = 'Dano'
   end
-  object labCACadastra: TLabeledEdit
-    Left = 24
-    Top = 192
-    Width = 121
-    Height = 21
-    EditLabel.Width = 14
-    EditLabel.Height = 13
-    EditLabel.Caption = 'CA'
-    TabOrder = 3
+  object Label5: TLabel
+    Left = 64
+    Top = 171
+    Width = 14
+    Height = 13
+    Caption = 'CA'
   end
   object mmoDescCadastra: TMemo
     Left = 208
     Top = 48
     Width = 361
     Height = 165
-    TabOrder = 4
+    Alignment = taCenter
+    TabOrder = 0
   end
   object btnCadastraDB: TButton
     Left = 592
@@ -79,7 +68,7 @@ object Form3: TForm3
     Width = 75
     Height = 25
     Caption = 'Cadastrar'
-    TabOrder = 5
+    TabOrder = 1
     OnClick = btnCadastraDBClick
   end
   object btnArmasCadastra: TButton
@@ -88,6 +77,37 @@ object Form3: TForm3
     Width = 75
     Height = 25
     Caption = 'Armas'
+    TabOrder = 2
+  end
+  object edtNomeCadastra: TEdit
+    Left = 24
+    Top = 48
+    Width = 121
+    Height = 21
+    TabOrder = 3
+  end
+  object edtLevelCadastra: TEdit
+    Left = 24
+    Top = 96
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 4
+  end
+  object edtDanoCadastra: TEdit
+    Left = 24
+    Top = 144
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 5
+  end
+  object edtCACadastra: TEdit
+    Left = 24
+    Top = 192
+    Width = 121
+    Height = 21
+    NumbersOnly = True
     TabOrder = 6
   end
   object isqCadastra: TIBSQL

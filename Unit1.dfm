@@ -1,8 +1,8 @@
 object dtmInimigos: TdtmInimigos
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 318
-  Width = 455
+  Height = 291
+  Width = 441
   object idbInimigos: TIBDatabase
     Connected = True
     DatabaseName = 'localhost:D:\SD\Cadastro de Inimigo\DB\TESTE.FDB'
