@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL;
+  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery;
 
 type
   TfrmMonstro = class(TForm)
@@ -21,8 +21,16 @@ type
     mmoDesc: TMemo;
     edtNome: TLabeledEdit;
     btnCadastrar: TButton;
+    DBGrid1: TDBGrid;
+    tqrTeste: TIBQuery;
+    dsTeste: TDataSource;
+    edtProcura2: TEdit;
+    btnProcura2: TButton;
+    Button1: TButton;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
+    procedure btnProcura2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,6 +50,16 @@ uses
 procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
 begin
    Form3.Show;
+end;
+
+procedure TfrmMonstro.btnProcura2Click(Sender: TObject);
+begin
+  if tqrTeste.Active then
+    tqrTeste.Close;
+
+  tqrTeste.SQL.Clear;
+  tqrTeste.SQL.Add('SELECT * FROM MONSTER');
+  tqrTeste.Open;
 end;
 
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
@@ -103,6 +121,21 @@ begin
 
   if mmoDesc.Text = '' then
     MessageDlg('Nenhum Montro com esse nome foi encontrado, tente novamente', mtError, [mbOK], 0);
+end;
+
+procedure TfrmMonstro.Button1Click(Sender: TObject);
+var
+  ProcuraMelhor: string;
+begin
+  if tqrTeste.Active then
+    tqrTeste.Close;
+
+  ProcuraMelhor := '%' + edtProcura2.Text + '%';
+  ShowMessage(ProcuraMelhor);
+  tqrTeste.SQL.Clear;
+  tqrTeste.SQL.Add('SELECT * FROM MONSTER');
+  tqrTeste.SQL.Add('WHERE NOME LIKE' +QuotedStr(ProcuraMelhor));
+  tqrTeste.Open;
 end;
 
 end.

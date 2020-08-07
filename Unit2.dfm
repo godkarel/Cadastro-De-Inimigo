@@ -2,8 +2,8 @@ object frmMonstro: TfrmMonstro
   Left = 0
   Top = 0
   Caption = 'Banco de Dados dos Inimigos'
-  ClientHeight = 277
-  ClientWidth = 714
+  ClientHeight = 610
+  ClientWidth = 698
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,11 +14,11 @@ object frmMonstro: TfrmMonstro
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 248
-    Top = 8
-    Width = 205
+    Left = 232
+    Top = 16
+    Width = 209
     Height = 24
-    Caption = 'Cadastro de Inimigo'
+    Caption = 'Registro de Inimigos'
     Font.Charset = ANSI_CHARSET
     Font.Color = clRed
     Font.Height = -21
@@ -90,11 +90,11 @@ object frmMonstro: TfrmMonstro
     TabOrder = 3
   end
   object btnProcurar: TButton
-    Left = 467
+    Left = 440
     Top = 63
-    Width = 75
+    Width = 102
     Height = 25
-    Caption = 'Procurar'
+    Caption = 'Procurar Especifico'
     TabOrder = 4
     OnClick = btnProcurarClick
   end
@@ -123,17 +123,69 @@ object frmMonstro: TfrmMonstro
   end
   object btnCadastrar: TButton
     Left = 216
-    Top = 63
-    Width = 75
-    Height = 25
-    Caption = 'Cadastrar'
+    Top = 55
+    Width = 123
+    Height = 42
+    Caption = 'Cadastrar Novo Inimigo'
     TabOrder = 7
     OnClick = btnCadastrarClick
+  end
+  object DBGrid1: TDBGrid
+    Left = 16
+    Top = 381
+    Width = 665
+    Height = 199
+    DataSource = dsTeste
+    TabOrder = 8
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object edtProcura2: TEdit
+    Left = 16
+    Top = 338
+    Width = 121
+    Height = 27
+    TabOrder = 9
+  end
+  object btnProcura2: TButton
+    Left = 576
+    Top = 333
+    Width = 83
+    Height = 31
+    Caption = 'Monstrar Tudo'
+    TabOrder = 10
+    OnClick = btnProcura2Click
+  end
+  object Button1: TButton
+    Left = 168
+    Top = 333
+    Width = 105
+    Height = 31
+    Caption = 'Procurar por Nome'
+    TabOrder = 11
+    OnClick = Button1Click
   end
   object isqProcuraInimigo: TIBSQL
     Database = dtmInimigos.idbInimigos
     Transaction = dtmInimigos.itrInimigos
-    Left = 464
-    Top = 8
+    Left = 368
+    Top = 48
+  end
+  object tqrTeste: TIBQuery
+    Database = dtmInimigos.idbInimigos
+    Transaction = dtmInimigos.itrInimigos
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 544
+    Top = 16
+  end
+  object dsTeste: TDataSource
+    DataSet = tqrTeste
+    Left = 488
+    Top = 16
   end
 end
