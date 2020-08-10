@@ -64,6 +64,7 @@ begin
     isqCadastra.ParamByName('CAMONSTER').AsInteger := RegistroCA;
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ExecQuery;
+    dtmInimigos.itrInimigos.Commit;
     except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');

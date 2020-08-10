@@ -151,7 +151,8 @@ procedure TfrmMonstro.Button1Click(Sender: TObject);
 var
   ProcuraMelhor: string;
 begin
-  tqrTeste.Close;
+  if tqrTeste.Active then
+    tqrTeste.Close;
 
   ProcuraMelhor := '%' + UpperCase(edtProcura2.Text) + '%';
   tqrTeste.SQL.Clear;

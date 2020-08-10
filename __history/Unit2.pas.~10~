@@ -60,20 +60,10 @@ var
  RespostaUsuario: Integer;
 begin
   RespostaUsuario := MessageDlg('Tem certeza de que quer apagar todos os registros ?', mtWarning, [mbYes, mbNo], 0);
-   try
-     if RespostaUsuario < 7 then
+    if RespostaUsuario < 7 then
       tqrTeste.SQL.add('DELETE * FROM MONSTER');
-      isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
-      isqProcuraInimigo.ExecQuery;
-    except
-    dtmInimigos.itrInimigos.Rollback;
-    ShowMessage('Ops, algo deu errado!!!');
-    raise
-  end;
-  isqProcuraInimigo.ExecQuery;
-  dtmInimigos.itrInimigos.Commit;
-  isqProcuraInimigo.Close;
 
+  ShowMessage(IntToStr(RespostaUsuario));
 end;
 
 procedure TfrmMonstro.btnProcura2Click(Sender: TObject);
@@ -111,7 +101,7 @@ begin
   isqProcuraInimigo.ParamByName('NOMEMONSTRO').AsString := Procura;
   isqProcuraInimigo.ExecQuery;
   try
-    edtNome.Text := (isqProcuraInimigo.FieldByName('NOME').AsString);
+    edtNome.Text := (isqProcuraInimigo.FieldByName('ALVARO').AsString);
   finally
     isqProcuraInimigo.Close;
   end;
@@ -151,7 +141,8 @@ procedure TfrmMonstro.Button1Click(Sender: TObject);
 var
   ProcuraMelhor: string;
 begin
-  tqrTeste.Close;
+  if tqrTeste.Active then
+    tqrTeste.Close;
 
   ProcuraMelhor := '%' + UpperCase(edtProcura2.Text) + '%';
   tqrTeste.SQL.Clear;
@@ -159,7 +150,6 @@ begin
   tqrTeste.SQL.Add('WHERE NOME LIKE :PROCURAMONSTRO');
   tqrTeste.ParamByName('PROCURAMONSTRO').AsString := ProcuraMelhor;
   tqrTeste.Open;
-  edtProcura2.clear;
 end;
 
 end.

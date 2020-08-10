@@ -45,15 +45,13 @@ RegistroDano: Integer;
 RegistroCA: Integer;
 RegistroDesc: String;
 begin
-
-
   try
     RegistroNome := edtNomeCadastra.Text;
     RegistroLevel := StrToInt(edtLevelCadastra.Text);
     RegistroDano := StrToInt(edtDanoCadastra.Text);
     RegistroCA := StrToInt(edtCACadastra.Text);
     RegistroDesc := mmoDescCadastra.text;
-
+    
     isqCadastra.SQL.add('INSERT INTO MONSTER');
     isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO)');
     isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER)');
@@ -64,6 +62,7 @@ begin
     isqCadastra.ParamByName('CAMONSTER').AsInteger := RegistroCA;
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ExecQuery;
+    dtmInimigos.itrInimigos.Commit;
     except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
@@ -71,11 +70,6 @@ begin
   end;
   dtmInimigos.itrInimigos.Commit;
   isqCadastra.Close;
-  edtNomeCadastra.Clear;
-  edtLevelCadastra.Clear;
-  edtDanoCadastra.Clear;
-  edtCACadastra.Clear;
-  mmoDescCadastra.Lines.Clear;
 end;
 
 end.
