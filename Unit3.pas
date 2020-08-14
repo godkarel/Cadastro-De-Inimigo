@@ -45,10 +45,10 @@ RegistroDano: Integer;
 RegistroCA: Integer;
 RegistroDesc: String;
 begin
-
-
+  dtmInimigos.itrInimigos.Active := True;
   try
-    RegistroNome := edtNomeCadastra.Text;
+    isqCadastra.SQL.Clear;
+    RegistroNome := UpperCase(edtNomeCadastra.Text);
     RegistroLevel := StrToInt(edtLevelCadastra.Text);
     RegistroDano := StrToInt(edtDanoCadastra.Text);
     RegistroCA := StrToInt(edtCACadastra.Text);
@@ -64,12 +64,12 @@ begin
     isqCadastra.ParamByName('CAMONSTER').AsInteger := RegistroCA;
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ExecQuery;
+    dtmInimigos.itrInimigos.Commit;
     except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
     raise
   end;
-  dtmInimigos.itrInimigos.Commit;
   isqCadastra.Close;
   edtNomeCadastra.Clear;
   edtLevelCadastra.Clear;

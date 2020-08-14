@@ -60,17 +60,18 @@ var
  RespostaUsuario: Integer;
 begin
   RespostaUsuario := MessageDlg('Tem certeza de que quer apagar todos os registros ?', mtWarning, [mbYes, mbNo], 0);
-   try
-     if RespostaUsuario < 7 then
+  try
+    if RespostaUsuario = 6 then
+      begin
       tqrTeste.SQL.add('DELETE * FROM MONSTER');
       isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
       isqProcuraInimigo.ExecQuery;
-    except
+      end;
+  except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
     raise
   end;
-  isqProcuraInimigo.ExecQuery;
   dtmInimigos.itrInimigos.Commit;
   isqProcuraInimigo.Close;
 

@@ -144,7 +144,7 @@ object frmMonstro: TfrmMonstro
     OnClick = btnCadastrarClick
   end
   object DBGrid1: TDBGrid
-    Left = 16
+    Left = 8
     Top = 381
     Width = 665
     Height = 199
