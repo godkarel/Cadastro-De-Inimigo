@@ -30,6 +30,7 @@ type
     Label2: TLabel;
     btnDeletar: TButton;
     edtIDProcura: TEdit;
+    DBGrid2: TDBGrid;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnProcura2Click(Sender: TObject);

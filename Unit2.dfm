@@ -115,13 +115,14 @@ object frmMonstro: TfrmMonstro
     Left = 216
     Top = 120
     Width = 465
-    Height = 133
+    Height = 65
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ScrollBars = ssVertical
     TabOrder = 5
   end
   object edtNome: TLabeledEdit
@@ -196,6 +197,18 @@ object frmMonstro: TfrmMonstro
     Width = 121
     Height = 21
     TabOrder = 13
+  end
+  object DBGrid2: TDBGrid
+    Left = 216
+    Top = 191
+    Width = 465
+    Height = 62
+    TabOrder = 14
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
   end
   object isqProcuraInimigo: TIBSQL
     Database = dtmInimigos.idbInimigos

@@ -22,6 +22,7 @@ type
     Label4: TLabel;
     Label5: TLabel;
     edtIDCadastra: TEdit;
+    ComboBox1: TComboBox;
     procedure btnCadastraDBClick(Sender: TObject);
   private
     { Private declarations }

@@ -29,6 +29,7 @@ type
     Button1: TButton;
     Label2: TLabel;
     btnDeletar: TButton;
+    edtIDProcura: TEdit;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnProcura2Click(Sender: TObject);
@@ -60,17 +61,18 @@ var
  RespostaUsuario: Integer;
 begin
   RespostaUsuario := MessageDlg('Tem certeza de que quer apagar todos os registros ?', mtWarning, [mbYes, mbNo], 0);
-   try
-     if RespostaUsuario < 7 then
+  try
+    if RespostaUsuario = 6 then
+      begin
       tqrTeste.SQL.add('DELETE * FROM MONSTER');
       isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
       isqProcuraInimigo.ExecQuery;
-    except
+      end;
+  except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
     raise
   end;
-  isqProcuraInimigo.ExecQuery;
   dtmInimigos.itrInimigos.Commit;
   isqProcuraInimigo.Close;
 
@@ -90,6 +92,8 @@ procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var
   Procura: String;
   ComandoMontado : String;
+  GambiarraAutoGerador : String;
+  GambiarraFinal : Integer;
 begin
   edtLevel.Clear;
   edtNome.Clear;
@@ -139,6 +143,16 @@ begin
   isqProcuraInimigo.ExecQuery;
   try
     edtCA.Text := (isqProcuraInimigo.FieldByName('CA').AsString);
+  finally
+    isqProcuraInimigo.Close;
+  end;
+
+  isqProcuraInimigo.SQL.Text := 'SELECT MAX(ID) FROM MONSTER';
+  isqProcuraInimigo.ExecQuery;
+   try
+    GambiarraAutoGerador := (isqProcuraInimigo.FieldByName('MAX').AsString);
+    GambiarraFinal := StrToInt(GambiarraAutoGerador) + 1;
+    edtIDProcura.Text := IntToStr(GambiarraFinal);
   finally
     isqProcuraInimigo.Close;
   end;
