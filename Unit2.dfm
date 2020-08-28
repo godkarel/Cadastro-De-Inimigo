@@ -16,7 +16,7 @@ object frmMonstro: TfrmMonstro
   object Label1: TLabel
     Left = 232
     Top = 16
-    Width = 209
+    Width = 191
     Height = 24
     Caption = 'Registro de Inimigos'
     Font.Charset = ANSI_CHARSET
@@ -29,7 +29,7 @@ object frmMonstro: TfrmMonstro
   object labSeach: TLabel
     Left = 548
     Top = 42
-    Width = 133
+    Width = 114
     Height = 18
     Caption = 'Porcurar Inimigo'
     Font.Charset = ANSI_CHARSET
@@ -42,8 +42,8 @@ object frmMonstro: TfrmMonstro
   object labDesc: TLabel
     Left = 392
     Top = 94
-    Width = 87
-    Height = 20
+    Width = 77
+    Height = 19
     Caption = 'Descri'#231#227'o'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -55,7 +55,7 @@ object frmMonstro: TfrmMonstro
   object Label2: TLabel
     Left = 27
     Top = 343
-    Width = 172
+    Width = 158
     Height = 24
     Caption = 'Lista de Inimigos'
     Font.Charset = ANSI_CHARSET
@@ -189,6 +189,13 @@ object frmMonstro: TfrmMonstro
     Caption = 'Deletar Todos Inimigos'
     TabOrder = 12
     OnClick = btnDeletarClick
+  end
+  object edtIDProcura: TEdit
+    Left = 16
+    Top = 21
+    Width = 121
+    Height = 21
+    TabOrder = 13
   end
   object isqProcuraInimigo: TIBSQL
     Database = dtmInimigos.idbInimigos
