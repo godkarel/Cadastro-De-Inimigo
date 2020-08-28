@@ -21,6 +21,7 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
+    edtIDCadastra: TEdit;
     procedure btnCadastraDBClick(Sender: TObject);
   private
     { Private declarations }
@@ -44,8 +45,21 @@ RegistroLevel : Integer;
 RegistroDano: Integer;
 RegistroCA: Integer;
 RegistroDesc: String;
+GambiarraRegistroRecebe: String;
+GambiarraRegistroEntrega: Integer;
+GambiarraRegistroFinal: Integer;
 begin
   dtmInimigos.itrInimigos.Active := True;
+
+  isqCadastra.SQL.Clear;
+  isqCadastra.SQL.add('SELECT MAX(ID) FROM MONSTER');
+  isqCadastra.ExecQuery;
+  GambiarraRegistroRecebe := (isqCadastra.FieldByName('MAX').AsString);
+  GambiarraRegistroEntrega := StrToInt(GambiarraRegistroRecebe) + 1;
+  GambiarraRegistroFinal := GambiarraRegistroEntrega;
+  edtNomeCadastra.Text := IntToStr(GambiarraRegistroEntrega);
+  isqCadastra.Close;
+
   try
     isqCadastra.SQL.Clear;
     RegistroNome := UpperCase(edtNomeCadastra.Text);
@@ -55,14 +69,16 @@ begin
     RegistroDesc := mmoDescCadastra.text;
 
     isqCadastra.SQL.add('INSERT INTO MONSTER');
-    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO)');
-    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER)');
+    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID)');
+    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER)');
 
     isqCadastra.ParamByName('NOMEMONSTER').AsString := RegistroNome;
     isqCadastra.ParamByName('LEVELMONSTER').AsInteger := RegistroLevel;
     isqCadastra.ParamByName('DANOMONSTER').AsInteger := RegistroDano;
     isqCadastra.ParamByName('CAMONSTER').AsInteger := RegistroCA;
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
+    isqCadastra.ParamByName('IDMONSTER').AsInteger := GambiarraRegistroFinal;
+
     isqCadastra.ExecQuery;
     dtmInimigos.itrInimigos.Commit;
     except
@@ -77,5 +93,6 @@ begin
   edtCACadastra.Clear;
   mmoDescCadastra.Lines.Clear;
 end;
+
 
 end.
