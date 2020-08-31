@@ -71,20 +71,12 @@ object Form3: TForm3
     TabOrder = 1
     OnClick = btnCadastraDBClick
   end
-  object btnArmasCadastra: TButton
-    Left = 592
-    Top = 200
-    Width = 75
-    Height = 25
-    Caption = 'Armas'
-    TabOrder = 2
-  end
   object edtNomeCadastra: TEdit
     Left = 24
     Top = 64
     Width = 121
     Height = 21
-    TabOrder = 3
+    TabOrder = 2
   end
   object edtLevelCadastra: TEdit
     Left = 24
@@ -92,7 +84,7 @@ object Form3: TForm3
     Width = 121
     Height = 21
     NumbersOnly = True
-    TabOrder = 4
+    TabOrder = 3
   end
   object edtDanoCadastra: TEdit
     Left = 24
@@ -100,7 +92,7 @@ object Form3: TForm3
     Width = 121
     Height = 21
     NumbersOnly = True
-    TabOrder = 5
+    TabOrder = 4
   end
   object edtCACadastra: TEdit
     Left = 24
@@ -108,7 +100,7 @@ object Form3: TForm3
     Width = 121
     Height = 21
     NumbersOnly = True
-    TabOrder = 6
+    TabOrder = 5
   end
   object edtIDCadastra: TEdit
     Left = 24
@@ -116,16 +108,56 @@ object Form3: TForm3
     Width = 121
     Height = 21
     NumbersOnly = True
-    TabOrder = 7
+    TabOrder = 6
     Visible = False
   end
-  object ComboBox1: TComboBox
+  object cmbArma1: TComboBox
     Left = 592
-    Top = 160
+    Top = 119
     Width = 75
     Height = 21
+    ItemIndex = 0
+    TabOrder = 7
+    Text = 'Nenhuma'
+    Items.Strings = (
+      'Nenhuma'
+      'Espada'
+      'Arco'
+      'Machado'
+      'Cajado'
+      'Pistola')
+  end
+  object cmbArma2: TComboBox
+    Left = 592
+    Top = 146
+    Width = 75
+    Height = 21
+    ItemIndex = 0
     TabOrder = 8
-    Text = 'ComboBox1'
+    Text = 'Nenhuma'
+    Items.Strings = (
+      'Nenhuma'
+      'Espada'
+      'Arco'
+      'Machado'
+      'Cajado'
+      'Pistola')
+  end
+  object cmbArma3: TComboBox
+    Left = 592
+    Top = 173
+    Width = 75
+    Height = 21
+    ItemIndex = 0
+    TabOrder = 9
+    Text = 'Nenhuma'
+    Items.Strings = (
+      'Nenhuma'
+      'Espada'
+      'Arco'
+      'Machado'
+      'Cajado'
+      'Pistola')
   end
   object isqCadastra: TIBSQL
     Database = dtmInimigos.idbInimigos

@@ -149,7 +149,7 @@ object frmMonstro: TfrmMonstro
     Top = 381
     Width = 665
     Height = 199
-    DataSource = dsTeste
+    DataSource = dsListaInimigos
     TabOrder = 8
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -203,6 +203,7 @@ object frmMonstro: TfrmMonstro
     Top = 191
     Width = 465
     Height = 62
+    DataSource = dsArmaRegistro
     TabOrder = 14
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -222,12 +223,25 @@ object frmMonstro: TfrmMonstro
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
-    Left = 544
-    Top = 16
+    Left = 136
+    Top = 600
   end
-  object dsTeste: TDataSource
+  object dsListaInimigos: TDataSource
     DataSet = tqrTeste
-    Left = 488
-    Top = 16
+    Left = 72
+    Top = 600
+  end
+  object dsArmaRegistro: TDataSource
+    DataSet = tqrArmaInimigo
+    Left = 472
+    Top = 8
+  end
+  object tqrArmaInimigo: TIBQuery
+    Database = dtmInimigos.idbInimigos
+    Transaction = dtmInimigos.itrInimigos
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    Left = 552
   end
 end

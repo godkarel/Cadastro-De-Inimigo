@@ -23,7 +23,7 @@ type
     btnCadastrar: TButton;
     DBGrid1: TDBGrid;
     tqrTeste: TIBQuery;
-    dsTeste: TDataSource;
+    dsListaInimigos: TDataSource;
     edtProcura2: TEdit;
     btnProcura2: TButton;
     Button1: TButton;
@@ -31,6 +31,8 @@ type
     btnDeletar: TButton;
     edtIDProcura: TEdit;
     DBGrid2: TDBGrid;
+    dsArmaRegistro: TDataSource;
+    tqrArmaInimigo: TIBQuery;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnProcura2Click(Sender: TObject);
@@ -157,6 +159,14 @@ begin
   finally
     isqProcuraInimigo.Close;
   end;
+
+  tqrArmaInimigo.Close;
+
+  tqrArmaInimigo.SQL.Clear;
+  tqrArmaInimigo.SQL.Add('SELECT IDARMA FROM MONSTER');
+  tqrArmaInimigo.SQL.Add('WHERE NOME LIKE :ARMADOMONSTRO');
+  tqrArmaInimigo.ParamByName('ARMADOMONSTRO').AsString := Procura;
+  tqrArmaInimigo.Open;
 
   if mmoDesc.Text = '' then
     MessageDlg('Nenhum Montro com esse nome foi encontrado, tente novamente', mtError, [mbOK], 0);

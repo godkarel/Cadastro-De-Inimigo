@@ -4,14 +4,13 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, IBX.IBSQL;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, IBX.IBSQL, Unit1, Unit2;
 
 type
   TForm3 = class(TForm)
     mmoDescCadastra: TMemo;
     Label1: TLabel;
     btnCadastraDB: TButton;
-    btnArmasCadastra: TButton;
     isqCadastra: TIBSQL;
     edtNomeCadastra: TEdit;
     edtLevelCadastra: TEdit;
@@ -22,7 +21,9 @@ type
     Label4: TLabel;
     Label5: TLabel;
     edtIDCadastra: TEdit;
-    ComboBox1: TComboBox;
+    cmbArma1: TComboBox;
+    cmbArma2: TComboBox;
+    cmbArma3: TComboBox;
     procedure btnCadastraDBClick(Sender: TObject);
   private
     { Private declarations }
@@ -36,8 +37,6 @@ var
 implementation
 
 {$R *.dfm}
-
-uses Unit1, Unit2;
 
 procedure TForm3.btnCadastraDBClick(Sender: TObject);
 var
@@ -70,8 +69,8 @@ begin
     RegistroDesc := mmoDescCadastra.text;
 
     isqCadastra.SQL.add('INSERT INTO MONSTER');
-    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID)');
-    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER)');
+    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID, IDARMA)');
+    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER, :IDDAARMA)');
 
     isqCadastra.ParamByName('NOMEMONSTER').AsString := RegistroNome;
     isqCadastra.ParamByName('LEVELMONSTER').AsInteger := RegistroLevel;
@@ -79,6 +78,19 @@ begin
     isqCadastra.ParamByName('CAMONSTER').AsInteger := RegistroCA;
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ParamByName('IDMONSTER').AsInteger := GambiarraRegistroFinal;
+
+    if cmbArma1.Text = 'Espada' then
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := 1
+    else if cmbArma1.Text = 'Arco' then
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
+    else if cmbArma1.Text = 'Machado' then
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := 3
+    else if cmbArma1.Text = 'Cajado' then
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := 4
+    else if cmbArma1.Text = 'Pistola' then
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
+    else
+    showMessage('Não foi registrada nenhuma Arma');
 
     isqCadastra.ExecQuery;
     dtmInimigos.itrInimigos.Commit;
