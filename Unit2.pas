@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery;
+  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery, Unit1, Unit3;
 
 type
   TfrmMonstro = class(TForm)
@@ -51,9 +51,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-  Unit1, Unit3;
-
 procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
 begin
    Form3.Show;
@@ -94,7 +91,6 @@ end;
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var
   Procura: String;
-  ComandoMontado : String;
   GambiarraAutoGerador : String;
   GambiarraFinal : Integer;
 begin
