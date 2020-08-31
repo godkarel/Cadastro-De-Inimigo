@@ -197,6 +197,7 @@ object frmMonstro: TfrmMonstro
     Width = 121
     Height = 21
     TabOrder = 13
+    Visible = False
   end
   object DBGrid2: TDBGrid
     Left = 216
