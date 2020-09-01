@@ -159,7 +159,7 @@ begin
   tqrArmaInimigo.Close;
 
   tqrArmaInimigo.SQL.Clear;
-  tqrArmaInimigo.SQL.Add('SELECT IDARMA FROM MONSTER');
+  tqrArmaInimigo.SQL.Add('SELECT IDARMA AS Arma_1, NOME FROM MONSTER');
   tqrArmaInimigo.SQL.Add('WHERE NOME LIKE :ARMADOMONSTRO');
   tqrArmaInimigo.ParamByName('ARMADOMONSTRO').AsString := Procura;
   tqrArmaInimigo.Open;
