@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery;
+  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery, Unit1, Unit3;
 
 type
   TfrmMonstro = class(TForm)
@@ -23,12 +23,16 @@ type
     btnCadastrar: TButton;
     DBGrid1: TDBGrid;
     tqrTeste: TIBQuery;
-    dsTeste: TDataSource;
+    dsListaInimigos: TDataSource;
     edtProcura2: TEdit;
     btnProcura2: TButton;
     Button1: TButton;
     Label2: TLabel;
     btnDeletar: TButton;
+    edtIDProcura: TEdit;
+    DBGrid2: TDBGrid;
+    dsArmaRegistro: TDataSource;
+    tqrArmaInimigo: TIBQuery;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnProcura2Click(Sender: TObject);
@@ -47,9 +51,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-  Unit1, Unit3;
-
 procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
 begin
    Form3.Show;
@@ -66,7 +67,6 @@ begin
       tqrTeste.SQL.add('DELETE * FROM MONSTER');
       isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
       isqProcuraInimigo.ExecQuery;
-      ShowMessage(IntToStr(RespostaUsuario));
       end;
   except
     dtmInimigos.itrInimigos.Rollback;
@@ -74,7 +74,6 @@ begin
     raise
   end;
   dtmInimigos.itrInimigos.Commit;
-  isqProcuraInimigo.SQL.Clear;
   isqProcuraInimigo.Close;
 
 end;
@@ -92,7 +91,8 @@ end;
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var
   Procura: String;
-  ComandoMontado : String;
+  GambiarraAutoGerador : String;
+  GambiarraFinal : Integer;
 begin
   edtLevel.Clear;
   edtNome.Clear;
@@ -145,6 +145,24 @@ begin
   finally
     isqProcuraInimigo.Close;
   end;
+
+  isqProcuraInimigo.SQL.Text := 'SELECT MAX(ID) FROM MONSTER';
+  isqProcuraInimigo.ExecQuery;
+   try
+    GambiarraAutoGerador := (isqProcuraInimigo.FieldByName('MAX').AsString);
+    GambiarraFinal := StrToInt(GambiarraAutoGerador) + 1;
+    edtIDProcura.Text := IntToStr(GambiarraFinal);
+  finally
+    isqProcuraInimigo.Close;
+  end;
+
+  tqrArmaInimigo.Close;
+
+  tqrArmaInimigo.SQL.Clear;
+  tqrArmaInimigo.SQL.Add('SELECT IDARMA AS Arma_1, NOME FROM MONSTER');
+  tqrArmaInimigo.SQL.Add('WHERE NOME LIKE :ARMADOMONSTRO');
+  tqrArmaInimigo.ParamByName('ARMADOMONSTRO').AsString := Procura;
+  tqrArmaInimigo.Open;
 
   if mmoDesc.Text = '' then
     MessageDlg('Nenhum Montro com esse nome foi encontrado, tente novamente', mtError, [mbOK], 0);

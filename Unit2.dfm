@@ -52,7 +52,7 @@ object frmMonstro: TfrmMonstro
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object labListaInimigos: TLabel
     Left = 27
     Top = 343
     Width = 158
@@ -64,6 +64,27 @@ object frmMonstro: TfrmMonstro
     Font.Name = 'Arial Rounded MT Bold'
     Font.Style = []
     ParentFont = False
+  end
+  object labArma1: TLabel
+    Left = 245
+    Top = 213
+    Width = 66
+    Height = 13
+    Caption = 'Primeira Arma'
+  end
+  object labArma2: TLabel
+    Left = 408
+    Top = 213
+    Width = 70
+    Height = 13
+    Caption = 'Segunda Arma'
+  end
+  object labArma3: TLabel
+    Left = 578
+    Top = 213
+    Width = 67
+    Height = 13
+    Caption = 'Terceira Arma'
   end
   object edtLevel: TLabeledEdit
     Left = 16
@@ -144,7 +165,7 @@ object frmMonstro: TfrmMonstro
     TabOrder = 7
     OnClick = btnCadastrarClick
   end
-  object DBGrid1: TDBGrid
+  object dbg1: TDBGrid
     Left = 8
     Top = 381
     Width = 665
@@ -173,14 +194,14 @@ object frmMonstro: TfrmMonstro
     TabOrder = 10
     OnClick = btnProcura2Click
   end
-  object Button1: TButton
+  object btnListaInimigos: TButton
     Left = 366
     Top = 344
     Width = 105
     Height = 31
     Caption = 'Listar Inimigos'
     TabOrder = 11
-    OnClick = Button1Click
+    OnClick = btnListaInimigosClick
   end
   object btnDeletar: TButton
     Left = 304
@@ -199,18 +220,26 @@ object frmMonstro: TfrmMonstro
     TabOrder = 13
     Visible = False
   end
-  object DBGrid2: TDBGrid
+  object edtRegistroArma1: TEdit
     Left = 216
-    Top = 191
-    Width = 465
-    Height = 62
-    DataSource = dsArmaRegistro
+    Top = 232
+    Width = 121
+    Height = 21
     TabOrder = 14
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
+  end
+  object edtRegistroArma2: TEdit
+    Left = 382
+    Top = 232
+    Width = 121
+    Height = 21
+    TabOrder = 15
+  end
+  object edtRegistroArma3: TEdit
+    Left = 552
+    Top = 232
+    Width = 121
+    Height = 21
+    TabOrder = 16
   end
   object isqProcuraInimigo: TIBSQL
     Database = dtmInimigos.idbInimigos
@@ -218,7 +247,7 @@ object frmMonstro: TfrmMonstro
     Left = 368
     Top = 48
   end
-  object tqrTeste: TIBQuery
+  object tqrListaInimigos: TIBQuery
     Database = dtmInimigos.idbInimigos
     Transaction = dtmInimigos.itrInimigos
     BufferChunks = 1000
@@ -228,7 +257,7 @@ object frmMonstro: TfrmMonstro
     Top = 600
   end
   object dsListaInimigos: TDataSource
-    DataSet = tqrTeste
+    DataSet = tqrListaInimigos
     Left = 72
     Top = 600
   end

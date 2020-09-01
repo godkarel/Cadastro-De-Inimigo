@@ -13,7 +13,7 @@ object Form3: TForm3
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object labDesc: TLabel
     Left = 336
     Top = 8
     Width = 93
@@ -26,28 +26,28 @@ object Form3: TForm3
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label2: TLabel
+  object labNomeCad: TLabel
     Left = 64
     Top = 45
     Width = 27
     Height = 13
     Caption = 'Nome'
   end
-  object Label3: TLabel
+  object labLevel3: TLabel
     Left = 64
     Top = 93
     Width = 25
     Height = 13
     Caption = 'Level'
   end
-  object Label4: TLabel
+  object labDano: TLabel
     Left = 64
     Top = 141
     Width = 25
     Height = 13
     Caption = 'Dano'
   end
-  object Label5: TLabel
+  object labCA: TLabel
     Left = 64
     Top = 187
     Width = 14

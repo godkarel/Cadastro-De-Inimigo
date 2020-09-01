@@ -9,17 +9,17 @@ uses
 type
   TForm3 = class(TForm)
     mmoDescCadastra: TMemo;
-    Label1: TLabel;
+    labDesc: TLabel;
     btnCadastraDB: TButton;
     isqCadastra: TIBSQL;
     edtNomeCadastra: TEdit;
     edtLevelCadastra: TEdit;
     edtDanoCadastra: TEdit;
     edtCACadastra: TEdit;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
+    labNomeCad: TLabel;
+    labLevel3: TLabel;
+    labDano: TLabel;
+    labCA: TLabel;
     edtIDCadastra: TEdit;
     cmbArma1: TComboBox;
     cmbArma2: TComboBox;
@@ -69,8 +69,8 @@ begin
     RegistroDesc := mmoDescCadastra.text;
 
     isqCadastra.SQL.add('INSERT INTO MONSTER');
-    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID, IDARMA)');
-    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER, :IDDAARMA)');
+    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID, IDARMA, IDARMA2, IDARMA3)');
+    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER, :IDDAARMA, :IDDAARMA2, :IDDAARMA3)');
 
     isqCadastra.ParamByName('NOMEMONSTER').AsString := RegistroNome;
     isqCadastra.ParamByName('LEVELMONSTER').AsInteger := RegistroLevel;
@@ -79,18 +79,9 @@ begin
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ParamByName('IDMONSTER').AsInteger := GambiarraRegistroFinal;
 
-    if cmbArma1.Text = 'Espada' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 1
-    else if cmbArma1.Text = 'Arco' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
-    else if cmbArma1.Text = 'Machado' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 3
-    else if cmbArma1.Text = 'Cajado' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 4
-    else if cmbArma1.Text = 'Pistola' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
-    else
-    showMessage('Não foi registrada nenhuma Arma');
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := cmbArma1.ItemIndex;
+    isqCadastra.ParamByName('IDDAARMA2').AsInteger := cmbArma2.ItemIndex;
+    isqCadastra.ParamByName('IDDAARMA3').AsInteger := cmbArma3.ItemIndex;
 
     isqCadastra.ExecQuery;
     dtmInimigos.itrInimigos.Commit;
@@ -105,6 +96,9 @@ begin
   edtDanoCadastra.Clear;
   edtCACadastra.Clear;
   mmoDescCadastra.Lines.Clear;
+  cmbArma1.Clear;
+  cmbArma2.Clear;
+  cmbArma3.Clear;
 end;
 
 
