@@ -57,7 +57,7 @@ begin
   GambiarraRegistroRecebe := (isqCadastra.FieldByName('MAX').AsString);
   GambiarraRegistroEntrega := StrToInt(GambiarraRegistroRecebe) + 1;
   GambiarraRegistroFinal := GambiarraRegistroEntrega;
-  edtNomeCadastra.Text := IntToStr(GambiarraRegistroEntrega);
+  edtIDCadastra.Text := IntToStr(GambiarraRegistroEntrega);
   isqCadastra.Close;
 
   try
