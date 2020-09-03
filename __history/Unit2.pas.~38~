@@ -105,6 +105,9 @@ begin
   edtDano.Clear;
   mmoDesc.Clear;
 
+  if edtIDProcura.Text = '' then
+    edtIDProcura.Text = 1;
+
   Procura := edtSeach.Text;
   isqProcuraInimigo.SQL.Text := 'SELECT DESCRICAO FROM MONSTER WHERE NOME = :DESCMONSTRO';
   isqProcuraInimigo.ParamByName('DESCMONSTRO').AsString := Procura;

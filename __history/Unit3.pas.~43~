@@ -4,25 +4,26 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, IBX.IBSQL;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, IBX.IBSQL, Unit1;
 
 type
   TForm3 = class(TForm)
     mmoDescCadastra: TMemo;
-    Label1: TLabel;
+    labDesc: TLabel;
     btnCadastraDB: TButton;
-    btnArmasCadastra: TButton;
     isqCadastra: TIBSQL;
     edtNomeCadastra: TEdit;
     edtLevelCadastra: TEdit;
     edtDanoCadastra: TEdit;
     edtCACadastra: TEdit;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
+    labNomeCad: TLabel;
+    labLevel3: TLabel;
+    labDano: TLabel;
+    labCA: TLabel;
     edtIDCadastra: TEdit;
-    cmbArma: TComboBox;
+    cmbArma1: TComboBox;
+    cmbArma2: TComboBox;
+    cmbArma3: TComboBox;
     procedure btnCadastraDBClick(Sender: TObject);
   private
     { Private declarations }
@@ -37,20 +38,20 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, Unit2;
-
 procedure TForm3.btnCadastraDBClick(Sender: TObject);
 var
-RegistroNome : string;
-RegistroLevel : Integer;
-RegistroDano: Integer;
-RegistroCA: Integer;
-RegistroDesc: String;
-GambiarraRegistroRecebe: String;
-GambiarraRegistroEntrega: Integer;
-GambiarraRegistroFinal: Integer;
+  RegistroNome : string;
+  RegistroLevel : Integer;
+  RegistroDano: Integer;
+  RegistroCA: Integer;
+  RegistroDesc: String;
+  GambiarraRegistroRecebe: String;
+  GambiarraRegistroEntrega: Integer;
+  GambiarraRegistroFinal: Integer;
 begin
   dtmInimigos.itrInimigos.Active := True;
+  if edtIDCadastra.Text = '' then
+     edtIDCadastra.Text = 1;
 
   isqCadastra.SQL.Clear;
   isqCadastra.SQL.add('SELECT MAX(ID) FROM MONSTER');
@@ -58,7 +59,7 @@ begin
   GambiarraRegistroRecebe := (isqCadastra.FieldByName('MAX').AsString);
   GambiarraRegistroEntrega := StrToInt(GambiarraRegistroRecebe) + 1;
   GambiarraRegistroFinal := GambiarraRegistroEntrega;
-  edtNomeCadastra.Text := IntToStr(GambiarraRegistroEntrega);
+  edtIDCadastra.Text := IntToStr(GambiarraRegistroEntrega);
   isqCadastra.Close;
 
   try
@@ -70,8 +71,8 @@ begin
     RegistroDesc := mmoDescCadastra.text;
 
     isqCadastra.SQL.add('INSERT INTO MONSTER');
-    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID, IDARMA)');
-    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER, IDDAARMA)');
+    isqCadastra.SQL.add('(NOME, LEVEL, DANO, CA, DESCRICAO, ID, IDARMA, IDARMA2, IDARMA3)');
+    isqCadastra.SQL.add('values (:NOMEMONSTER, :LEVELMONSTER, :DANOMONSTER, :CAMONSTER, :DESCRICAOMONSTER, :IDMONSTER, :IDDAARMA, :IDDAARMA2, :IDDAARMA3)');
 
     isqCadastra.ParamByName('NOMEMONSTER').AsString := RegistroNome;
     isqCadastra.ParamByName('LEVELMONSTER').AsInteger := RegistroLevel;
@@ -80,22 +81,13 @@ begin
     isqCadastra.ParamByName('DESCRICAOMONSTER').AsString := RegistroDesc;
     isqCadastra.ParamByName('IDMONSTER').AsInteger := GambiarraRegistroFinal;
 
-    if cmbArma.Text = 'Espada' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 1
-    else if cmbArma.Text = 'Arco' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
-    else if cmbArma.Text = 'Machado' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 3
-    else if cmbArma.Text = 'Cajado' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 4
-    else if cmbArma.Text = 'Pistola' then
-    isqCadastra.ParamByName('IDDAARMA').AsInteger := 2
-    else
-    showMessage('Não foi registrada nenhuma Arma');
+    isqCadastra.ParamByName('IDDAARMA').AsInteger := cmbArma1.ItemIndex;
+    isqCadastra.ParamByName('IDDAARMA2').AsInteger := cmbArma2.ItemIndex;
+    isqCadastra.ParamByName('IDDAARMA3').AsInteger := cmbArma3.ItemIndex;
 
     isqCadastra.ExecQuery;
     dtmInimigos.itrInimigos.Commit;
-    except
+  except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
     raise
@@ -106,6 +98,9 @@ begin
   edtDanoCadastra.Clear;
   edtCACadastra.Clear;
   mmoDescCadastra.Lines.Clear;
+  cmbArma1.Clear;
+  cmbArma2.Clear;
+  cmbArma3.Clear;
 end;
 
 

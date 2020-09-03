@@ -40,14 +40,14 @@ implementation
 
 procedure TForm3.btnCadastraDBClick(Sender: TObject);
 var
-RegistroNome : string;
-RegistroLevel : Integer;
-RegistroDano: Integer;
-RegistroCA: Integer;
-RegistroDesc: String;
-GambiarraRegistroRecebe: String;
-GambiarraRegistroEntrega: Integer;
-GambiarraRegistroFinal: Integer;
+  RegistroNome : string;
+  RegistroLevel : Integer;
+  RegistroDano: Integer;
+  RegistroCA: Integer;
+  RegistroDesc: String;
+  GambiarraRegistroRecebe: String;
+  GambiarraRegistroEntrega: Integer;
+  GambiarraRegistroFinal: Integer;
 begin
   dtmInimigos.itrInimigos.Active := True;
 
@@ -85,7 +85,7 @@ begin
 
     isqCadastra.ExecQuery;
     dtmInimigos.itrInimigos.Commit;
-    except
+  except
     dtmInimigos.itrInimigos.Rollback;
     ShowMessage('Ops, algo deu errado!!!');
     raise

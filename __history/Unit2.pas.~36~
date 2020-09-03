@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Data.DB,
-  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery;
+  Vcl.Grids, Vcl.DBGrids, IBX.IBSQL, IBX.IBCustomDataSet, IBX.IBQuery, Unit1, Unit3;
 
 type
   TfrmMonstro = class(TForm)
@@ -21,19 +21,27 @@ type
     mmoDesc: TMemo;
     edtNome: TLabeledEdit;
     btnCadastrar: TButton;
-    DBGrid1: TDBGrid;
-    tqrTeste: TIBQuery;
-    dsTeste: TDataSource;
+    dbg1: TDBGrid;
+    tqrListaInimigos: TIBQuery;
+    dsListaInimigos: TDataSource;
     edtProcura2: TEdit;
     btnProcura2: TButton;
-    Button1: TButton;
-    Label2: TLabel;
+    btnListaInimigos: TButton;
+    labListaInimigos: TLabel;
     btnDeletar: TButton;
     edtIDProcura: TEdit;
+    dsArmaRegistro: TDataSource;
+    tqrArmaInimigo: TIBQuery;
+    edtRegistroArma1: TEdit;
+    edtRegistroArma2: TEdit;
+    edtRegistroArma3: TEdit;
+    labArma1: TLabel;
+    labArma2: TLabel;
+    labArma3: TLabel;
     procedure btnProcurarClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure btnProcura2Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnListaInimigosClick(Sender: TObject);
     procedure btnDeletarClick(Sender: TObject);
   private
     { Private declarations }
@@ -48,9 +56,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-  Unit1, Unit3;
-
 procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
 begin
    Form3.Show;
@@ -64,7 +69,7 @@ begin
   try
     if RespostaUsuario = 6 then
       begin
-      tqrTeste.SQL.add('DELETE * FROM MONSTER');
+      tqrListaInimigos.SQL.add('DELETE * FROM MONSTER');
       isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
       isqProcuraInimigo.ExecQuery;
       end;
@@ -80,18 +85,17 @@ end;
 
 procedure TfrmMonstro.btnProcura2Click(Sender: TObject);
 begin
-  if tqrTeste.Active then
-    tqrTeste.Close;
+  if tqrListaInimigos.Active then
+    tqrListaInimigos.Close;
 
-  tqrTeste.SQL.Clear;
-  tqrTeste.SQL.Add('SELECT * FROM MONSTER');
-  tqrTeste.Open;
+  tqrListaInimigos.SQL.Clear;
+  tqrListaInimigos.SQL.Add('SELECT * FROM MONSTER');
+  tqrListaInimigos.Open;
 end;
 
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var
   Procura: String;
-  ComandoMontado : String;
   GambiarraAutoGerador : String;
   GambiarraFinal : Integer;
 begin
@@ -157,22 +161,96 @@ begin
     isqProcuraInimigo.Close;
   end;
 
+  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA FROM MONSTER WHERE NOME = :IDDAARMA1';
+  isqProcuraInimigo.ParamByName('IDDAARMA1').AsString := Procura;
+  isqProcuraInimigo.ExecQuery;
+  try
+    edtRegistroArma1.Text := (isqProcuraInimigo.FieldByName('IDARMA').AsString);
+    if edtRegistroArma1.Text = '0' then
+       edtRegistroArma1.Text := 'Nenhum';
+    if edtRegistroArma1.Text = '1' then
+       edtRegistroArma1.Text := 'Espada';
+    if edtRegistroArma1.Text = '2' then
+       edtRegistroArma1.Text := 'Arco';
+    if edtRegistroArma1.Text = '3' then
+       edtRegistroArma1.Text := 'Machado';
+    if edtRegistroArma1.Text = '4' then
+       edtRegistroArma1.Text := 'Cajado';
+    if edtRegistroArma1.Text = '5' then
+       edtRegistroArma1.Text := 'Pistola';
+
+  finally
+    isqProcuraInimigo.Close;
+  end;
+
+  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA2 FROM MONSTER WHERE NOME = :IDDAARMA2';
+  isqProcuraInimigo.ParamByName('IDDAARMA2').AsString := Procura;
+  isqProcuraInimigo.ExecQuery;
+  try
+    edtRegistroArma2.Text := (isqProcuraInimigo.FieldByName('IDARMA2').AsString);
+    if edtRegistroArma2.Text = '0' then
+       edtRegistroArma2.Text := 'Nenhum';
+    if edtRegistroArma2.Text = '1' then
+       edtRegistroArma2.Text := 'Espada';
+    if edtRegistroArma2.Text = '2' then
+       edtRegistroArma2.Text := 'Arco';
+    if edtRegistroArma2.Text = '3' then
+       edtRegistroArma2.Text := 'Machado';
+    if edtRegistroArma2.Text = '4' then
+       edtRegistroArma2.Text := 'Cajado';
+    if edtRegistroArma2.Text = '5' then
+       edtRegistroArma2.Text := 'Pistola';
+
+  finally
+    isqProcuraInimigo.Close;
+  end;
+
+  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA3 FROM MONSTER WHERE NOME = :IDDAARMA3';
+  isqProcuraInimigo.ParamByName('IDDAARMA3').AsString := Procura;
+  isqProcuraInimigo.ExecQuery;
+  try
+    edtRegistroArma3.Text := (isqProcuraInimigo.FieldByName('IDARMA3').AsString);
+    if edtRegistroArma3.Text = '0' then
+       edtRegistroArma3.Text := 'Nenhum';
+    if edtRegistroArma3.Text = '1' then
+       edtRegistroArma3.Text := 'Espada';
+    if edtRegistroArma3.Text = '2' then
+       edtRegistroArma3.Text := 'Arco';
+    if edtRegistroArma3.Text = '3' then
+       edtRegistroArma3.Text := 'Machado';
+    if edtRegistroArma3.Text = '4' then
+       edtRegistroArma3.Text := 'Cajado';
+    if edtRegistroArma3.Text = '5' then
+       edtRegistroArma3.Text := 'Pistola';
+
+  finally
+    isqProcuraInimigo.Close;
+  end;
+
+  tqrArmaInimigo.Close;
+
+  tqrArmaInimigo.SQL.Clear;
+  tqrArmaInimigo.SQL.Add('SELECT IDARMA FROM MONSTER');
+  tqrArmaInimigo.SQL.Add('WHERE NOME LIKE :ARMADOMONSTRO');
+  tqrArmaInimigo.ParamByName('ARMADOMONSTRO').AsString := Procura;
+  tqrArmaInimigo.Open;
+
   if mmoDesc.Text = '' then
     MessageDlg('Nenhum Montro com esse nome foi encontrado, tente novamente', mtError, [mbOK], 0);
 end;
 
-procedure TfrmMonstro.Button1Click(Sender: TObject);
+procedure TfrmMonstro.btnListaInimigosClick(Sender: TObject);
 var
   ProcuraMelhor: string;
 begin
-  tqrTeste.Close;
+  tqrListaInimigos.Close;
 
   ProcuraMelhor := '%' + UpperCase(edtProcura2.Text) + '%';
-  tqrTeste.SQL.Clear;
-  tqrTeste.SQL.Add('SELECT * FROM MONSTER');
-  tqrTeste.SQL.Add('WHERE NOME LIKE :PROCURAMONSTRO');
-  tqrTeste.ParamByName('PROCURAMONSTRO').AsString := ProcuraMelhor;
-  tqrTeste.Open;
+  tqrListaInimigos.SQL.Clear;
+  tqrListaInimigos.SQL.Add('SELECT * FROM MONSTER');
+  tqrListaInimigos.SQL.Add('WHERE NOME LIKE :PROCURAMONSTRO');
+  tqrListaInimigos.ParamByName('PROCURAMONSTRO').AsString := ProcuraMelhor;
+  tqrListaInimigos.Open;
   edtProcura2.clear;
 end;
 

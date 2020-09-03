@@ -37,6 +37,18 @@ procedure TdtmInimigos.DataModuleCreate(Sender: TObject);
 begin
   idbInimigos.Connected := True;
   itrInimigos.Active := True;
+  //isqAux.SQL.Text := 'select T.* from TESTE T';
+  //isqAux.ExecQuery;
+
+ // try
+   // while not isqAux.Eof do
+    //begin
+    //  ShowMessage(isqAux.FieldByName('DESCRICAO').AsString);
+    //  isqAux.Next;
+   // end;
+  //finally
+    //isqAux.Close;
+  //end;
 end;
 
 end.

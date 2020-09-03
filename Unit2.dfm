@@ -2,7 +2,7 @@ object frmMonstro: TfrmMonstro
   Left = 0
   Top = 0
   Caption = 'Banco de Dados dos Inimigos'
-  ClientHeight = 639
+  ClientHeight = 664
   ClientWidth = 698
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
