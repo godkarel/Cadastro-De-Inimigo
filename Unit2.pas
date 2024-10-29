@@ -45,6 +45,9 @@ type
     procedure btnDeletarClick(Sender: TObject);
   private
     { Private declarations }
+    procedure PreencherCampo(Edit: TEdit; const Campo, Parametro: string);
+    procedure PreencherArmas(const NomeMonstro: string);
+    procedure ExibirMensagemErro(const Mensagem: string);
   public
     { Public declarations }
   end;
@@ -58,46 +61,37 @@ implementation
 
 procedure TfrmMonstro.btnCadastrarClick(Sender: TObject);
 begin
-   Form3.Show;
+  Form3.Show;
 end;
 
 procedure TfrmMonstro.btnDeletarClick(Sender: TObject);
 var
   RespostaUsuario: Integer;
 begin
-  RespostaUsuario := MessageDlg('Tem certeza de que quer apagar todos os registros ?', mtWarning, [mbYes, mbNo], 0);
-  try
-    if RespostaUsuario = 6 then
-      begin
-      tqrListaInimigos.SQL.add('DELETE * FROM MONSTER');
+  RespostaUsuario := MessageDlg('Tem certeza de que quer apagar todos os registros?', mtWarning, [mbYes, mbNo], 0);
+  if RespostaUsuario = mrYes then
+  begin
+    try
       isqProcuraInimigo.SQL.Text := 'DELETE FROM MONSTER';
       isqProcuraInimigo.ExecQuery;
-      end;
-  except
-    dtmInimigos.itrInimigos.Rollback;
-    ShowMessage('Ops, algo deu errado!!!');
-    raise
+      dtmInimigos.itrInimigos.Commit;
+    except
+      dtmInimigos.itrInimigos.Rollback;
+      ExibirMensagemErro('Ops, algo deu errado!!!');
+    end;
   end;
-  dtmInimigos.itrInimigos.Commit;
-  isqProcuraInimigo.Close;
-
 end;
 
 procedure TfrmMonstro.btnProcura2Click(Sender: TObject);
 begin
-  if tqrListaInimigos.Active then
-    tqrListaInimigos.Close;
-
-  tqrListaInimigos.SQL.Clear;
-  tqrListaInimigos.SQL.Add('SELECT * FROM MONSTER');
+  tqrListaInimigos.Close;
+  tqrListaInimigos.SQL.Text := 'SELECT * FROM MONSTER';
   tqrListaInimigos.Open;
 end;
 
 procedure TfrmMonstro.btnProcurarClick(Sender: TObject);
 var
   Procura: String;
-  GambiarraAutoGerador : String;
-  GambiarraFinal : Integer;
 begin
   edtLevel.Clear;
   edtNome.Clear;
@@ -106,136 +100,15 @@ begin
   mmoDesc.Clear;
 
   Procura := edtSeach.Text;
-  isqProcuraInimigo.SQL.Text := 'SELECT DESCRICAO FROM MONSTER WHERE NOME = :DESCMONSTRO';
-  isqProcuraInimigo.ParamByName('DESCMONSTRO').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    mmoDesc.Lines.Text := (isqProcuraInimigo.FieldByName('DESCRICAO').AsString);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT NOME FROM MONSTER WHERE NOME = :NOMEMONSTRO';
-  isqProcuraInimigo.ParamByName('NOMEMONSTRO').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtNome.Text := (isqProcuraInimigo.FieldByName('NOME').AsString);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT LEVEL FROM MONSTER WHERE NOME = :LEVELMONSTRO';
-  isqProcuraInimigo.ParamByName('LEVELMONSTRO').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtLevel.Text := (isqProcuraInimigo.FieldByName('LEVEL').AsString);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT DANO FROM MONSTER WHERE NOME = :DANOMONSTRO';
-  isqProcuraInimigo.ParamByName('DANOMONSTRO').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtDano.Text := (isqProcuraInimigo.FieldByName('DANO').AsString);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT CA FROM MONSTER WHERE NOME = :CAMONSTRO';
-  isqProcuraInimigo.ParamByName('CAMONSTRO').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtCA.Text := (isqProcuraInimigo.FieldByName('CA').AsString);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT MAX(ID) FROM MONSTER';
-  isqProcuraInimigo.ExecQuery;
-   try
-    GambiarraAutoGerador := (isqProcuraInimigo.FieldByName('MAX').AsString);
-    GambiarraFinal := StrToInt(GambiarraAutoGerador) + 1;
-    edtIDProcura.Text := IntToStr(GambiarraFinal);
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA FROM MONSTER WHERE NOME = :IDDAARMA1';
-  isqProcuraInimigo.ParamByName('IDDAARMA1').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtRegistroArma1.Text := (isqProcuraInimigo.FieldByName('IDARMA').AsString);
-    if edtRegistroArma1.Text = '0' then
-      edtRegistroArma1.Text := 'Nenhum';
-    if edtRegistroArma1.Text = '1' then
-      edtRegistroArma1.Text := 'Espada';
-    if edtRegistroArma1.Text = '2' then
-      edtRegistroArma1.Text := 'Arco';
-    if edtRegistroArma1.Text = '3' then
-      edtRegistroArma1.Text := 'Machado';
-    if edtRegistroArma1.Text = '4' then
-      edtRegistroArma1.Text := 'Cajado';
-    if edtRegistroArma1.Text = '5' then
-      edtRegistroArma1.Text := 'Pistola';
-
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA2 FROM MONSTER WHERE NOME = :IDDAARMA2';
-  isqProcuraInimigo.ParamByName('IDDAARMA2').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtRegistroArma2.Text := (isqProcuraInimigo.FieldByName('IDARMA2').AsString);
-    if edtRegistroArma2.Text = '0' then
-      edtRegistroArma2.Text := 'Nenhum';
-    if edtRegistroArma2.Text = '1' then
-      edtRegistroArma2.Text := 'Espada';
-    if edtRegistroArma2.Text = '2' then
-      edtRegistroArma2.Text := 'Arco';
-    if edtRegistroArma2.Text = '3' then
-      edtRegistroArma2.Text := 'Machado';
-    if edtRegistroArma2.Text = '4' then
-      edtRegistroArma2.Text := 'Cajado';
-    if edtRegistroArma2.Text = '5' then
-      edtRegistroArma2.Text := 'Pistola';
-
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  isqProcuraInimigo.SQL.Text := 'SELECT IDARMA3 FROM MONSTER WHERE NOME = :IDDAARMA3';
-  isqProcuraInimigo.ParamByName('IDDAARMA3').AsString := Procura;
-  isqProcuraInimigo.ExecQuery;
-  try
-    edtRegistroArma3.Text := (isqProcuraInimigo.FieldByName('IDARMA3').AsString);
-    if edtRegistroArma3.Text = '0' then
-      edtRegistroArma3.Text := 'Nenhum';
-    if edtRegistroArma3.Text = '1' then
-      edtRegistroArma3.Text := 'Espada';
-    if edtRegistroArma3.Text = '2' then
-      edtRegistroArma3.Text := 'Arco';
-    if edtRegistroArma3.Text = '3' then
-      edtRegistroArma3.Text := 'Machado';
-    if edtRegistroArma3.Text = '4' then
-      edtRegistroArma3.Text := 'Cajado';
-    if edtRegistroArma3.Text = '5' then
-      edtRegistroArma3.Text := 'Pistola';
-
-  finally
-    isqProcuraInimigo.Close;
-  end;
-
-  tqrArmaInimigo.Close;
-  tqrArmaInimigo.SQL.Clear;
-  tqrArmaInimigo.SQL.Add('SELECT IDARMA FROM MONSTER');
-  tqrArmaInimigo.SQL.Add('WHERE NOME LIKE :ARMADOMONSTRO');
-  tqrArmaInimigo.ParamByName('ARMADOMONSTRO').AsString := Procura;
-  tqrArmaInimigo.Open;
+  PreencherCampo(mmoDesc, 'DESCRICAO', Procura);
+  PreencherCampo(edtNome, 'NOME', Procura);
+  PreencherCampo(edtLevel, 'LEVEL', Procura);
+  PreencherCampo(edtDano, 'DANO', Procura);
+  PreencherCampo(edtCA, 'CA', Procura);
+  PreencherArmas(Procura);
 
   if mmoDesc.Text = '' then
-    MessageDlg('Nenhum Montro com esse nome foi encontrado, tente novamente', mtError, [mbOK], 0);
+    ExibirMensagemErro('Nenhum Monstro com esse nome foi encontrado, tente novamente!!');
 end;
 
 procedure TfrmMonstro.btnListaInimigosClick(Sender: TObject);
@@ -243,14 +116,50 @@ var
   ProcuraMelhor: string;
 begin
   tqrListaInimigos.Close;
-
   ProcuraMelhor := '%' + UpperCase(edtProcura2.Text) + '%';
-  tqrListaInimigos.SQL.Clear;
-  tqrListaInimigos.SQL.Add('SELECT * FROM MONSTER');
-  tqrListaInimigos.SQL.Add('WHERE NOME LIKE :PROCURAMONSTRO');
+  tqrListaInimigos.SQL.Text := 'SELECT * FROM MONSTER WHERE NOME LIKE :PROCURAMONSTRO';
   tqrListaInimigos.ParamByName('PROCURAMONSTRO').AsString := ProcuraMelhor;
   tqrListaInimigos.Open;
-  edtProcura2.clear;
+  edtProcura2.Clear;
+end;
+
+procedure TfrmMonstro.PreencherCampo(Edit: TEdit; const Campo, Parametro: string);
+begin
+  isqProcuraInimigo.SQL.Text := Format('SELECT %s FROM MONSTER WHERE NOME = :PARAM', [Campo]);
+  isqProcuraInimigo.ParamByName('PARAM').AsString := Parametro;
+  isqProcuraInimigo.ExecQuery;
+  try
+    Edit.Text := isqProcuraInimigo.FieldByName(Campo).AsString;
+  finally
+    isqProcuraInimigo.Close;
+  end;
+end;
+
+procedure TfrmMonstro.PreencherArmas(const NomeMonstro: string);
+  procedure PreencherArma(Edit: TEdit; const Campo: string);
+  begin
+    PreencherCampo(Edit, Campo, NomeMonstro);
+    case StrToIntDef(Edit.Text, -1) of
+      0: Edit.Text := 'Nenhum';
+      1: Edit.Text := 'Espada';
+      2: Edit.Text := 'Arco';
+      3: Edit.Text := 'Machado';
+      4: Edit.Text := 'Cajado';
+      5: Edit.Text := 'Pistola';
+    else
+      Edit.Text := 'Desconhecido';
+    end;
+  end;
+
+begin
+  PreencherArma(edtRegistroArma1, 'IDARMA');
+  PreencherArma(edtRegistroArma2, 'IDARMA2');
+  PreencherArma(edtRegistroArma3, 'IDARMA3');
+end;
+
+procedure TfrmMonstro.ExibirMensagemErro(const Mensagem: string);
+begin
+  MessageDlg(Mensagem, mtError, [mbOK], 0);
 end;
 
 end.

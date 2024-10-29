@@ -17,7 +17,8 @@ type
     isqAux: TIBSQL;
     procedure DataModuleCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure ConectarBanco;
+    procedure DesconectarBanco;
   public
     { Public declarations }
   end;
@@ -35,8 +36,30 @@ uses Unit2, Unit3;
 
 procedure TdtmInimigos.DataModuleCreate(Sender: TObject);
 begin
-  idbInimigos.Connected := True;
-  itrInimigos.Active := True;
+  try
+    ConectarBanco;
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Erro ao conectar com o banco de dados: ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TdtmInimigos.ConectarBanco;
+begin
+  if not idbInimigos.Connected then
+    idbInimigos.Connected := True;
+  if not itrInimigos.Active then
+    itrInimigos.Active := True;
+end;
+
+procedure TdtmInimigos.DesconectarBanco;
+begin
+  if itrInimigos.Active then
+    itrInimigos.Active := False;
+  if idbInimigos.Connected then
+    idbInimigos.Connected := False;
 end;
 
 end.
